@@ -1,0 +1,26 @@
+restore:
+    generator: '/Vol0/user/kirill.mazur/experiments/ckpts_release/inpainting_results_epoch28.t7'
+experiment:
+    root: '/Vol0/user/kirill.mazur/experiments/exp_pt2pt'
+    writer_root: '/Vol0/user/kirill.mazur/experiments/runs_pt2pt/'
+data:
+    category_path: '/Vol1/dbstore/datasets/k.mazur/shapenet_lmdb/ShapeNet.json'
+    partial_path: '/Vol1/dbstore/datasets/k.mazur/shapenet_lmdb/ShapeNetCompletion/%s/partial/%s/%s/%02d.pcd'
+    gt_path: '/Vol1/dbstore/datasets/k.mazur/shapenet_lmdb/ShapeNetCompletion/%s/complete/%s/%s.pcd'
+    batch_size: 2
+    batch_size_val: 2
+    input_aug: False
+    num_workers: 1
+    n_renders: 8
+    input_size: 2048
+    #gt_size: 8192
+    gt_size: 16384
+model:
+    generator: './model_zoo/completion/inpainter.py'
+train:
+    save: True
+    num_epochs: 1000
+    show_each: 1000
+    save_each: 2000
+    save_each_epoch: 1
+    chamfer_weight: !!float 0.0

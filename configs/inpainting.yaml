@@ -1,0 +1,33 @@
+experiment:
+    root: '/workspace/experiments/exp_pt2pt'
+    writer_root: '/workspace/experiments/runs_pt2pt_style_v5/'
+data:
+    category_path: '/workspace/datasets/k.mazur/shapenet_lmdb/ShapeNet.json'
+    partial_path: '/workspace/datasets/k.mazur/shapenet_lmdb/ShapeNetCompletion/%s/partial/%s/%s/%02d.pcd'
+    gt_path: '/workspace/datasets/k.mazur/shapenet_lmdb/ShapeNetCompletion/%s/complete/%s/%s.pcd'
+    batch_size: 2
+    batch_size_val: 2
+    input_aug: False
+    num_workers: 1
+    n_renders: 8
+    input_size: 2048
+    #gt_size: 8192
+    gt_size: 16384
+model:
+    generator: './model_zoo/completion/inpainter.py'
+train:
+    save: True
+    num_epochs: 1000
+    show_each: 1000
+    save_each: 2000
+    save_each_epoch: 1
+    chamfer_weight: !!float 0.0
+    optimizer:
+        type: 'Adam'
+        lr: !!float 1e-4
+        betas: [!!float 0.9, !!float 0.999]
+        weight_decay: !!float 0.0
+    scheduler:
+       type: 'StepLR'
+       gamma: !!float 0.5
+       step_size: 100000

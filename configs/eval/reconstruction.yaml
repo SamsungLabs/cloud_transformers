@@ -1,0 +1,20 @@
+restore:
+    generator: '/Vol0/user/kirill.mazur/experiments/ckpts_release/reconstruction_final_epoch_55.t7'
+experiment:
+    root: '/Vol0/user/kirill.mazur/experiments/exp_img2pt'
+    writer_root: '/Vol0/user/kirill.mazur/experiments/runs_img2pt/'
+data:
+    path: '/Vol1/dbstore/datasets/k.mazur/image_to_point'
+    batch_size: 4
+    batch_size_val: 4
+    input_aug: False
+    num_workers: 4
+    im_size: 128
+    gt_size: 8192
+model:
+    generator: './model_zoo/image_reconstruction/reconstructor.py'
+train:
+    num_epochs: 1000
+    show_each: 1000
+    save_each: 2000
+    save_each_epoch: 1

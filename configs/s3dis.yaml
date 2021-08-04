@@ -1,0 +1,30 @@
+experiment:
+    root: '/workspace/experiments/exp_indoor_seg'
+    writer_root: '/workspace/experiments/runs_indoor_seg_inc_v3/'
+data:
+    path: '/workspace/datasets/k.mazur/indoor3d_sem_seg_hdf5_data'
+    batch_size: 8
+    batch_size_val: 8
+    num_workers: 8
+    num_points: 4096
+    test_area: 'Area_5'
+    data_percent: !!float 1.0
+    aug: True
+model:
+    generator: './model_zoo/s3dis/segmenter.py'
+train:
+    label_smooth: False
+    num_epochs: 1000
+    show_each: 2000
+    save_each: 25000
+    save_each_epoch: 100
+    val_step: 1
+    optimizer:
+        type: 'Adam'
+        lr: !!float 1e-3
+        betas: [!!float 0.9, !!float 0.999]
+        weight_decay: !!float 0.0
+    scheduler:
+       type: 'StepLR'
+       gamma: !!float 0.7
+       step_size: 25000

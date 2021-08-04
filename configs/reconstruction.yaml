@@ -1,0 +1,28 @@
+experiment:
+    root: '/workspace/experiments/exp_img2pt'
+    writer_root: '/workspace/experiments/runs_imgpt_style_v4/'
+data:
+    path: '/workspace/datasets/k.mazur/image_to_point'
+    batch_size: 4
+    batch_size_val: 4
+    input_aug: False
+    num_workers: 4
+    im_size: 128
+    gt_size: 8192
+model:
+    generator: './model_zoo/image_reconstruction/reconstructor.py'
+train:
+    num_epochs: 1000
+    show_each: 1000
+    save_each: 2000
+    save_each_epoch: 1
+    optimizer:
+        type: 'Adam'
+        lr: !!float 1e-4
+        betas: [!!float 0.9, !!float 0.999]
+        weight_decay: !!float 0.0
+    scheduler:
+       type: 'StepLR'
+       gamma: !!float 0.5
+       #warmup_steps: 1000
+       step_size: 100000

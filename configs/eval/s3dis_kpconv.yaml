@@ -1,0 +1,23 @@
+restore:
+    generator: '/Vol0/user/kirill.mazur/experiments/ckpts_release/s3dis_kpconvprotocol.t7'
+experiment:
+    root: '/Vol0/user/kirill.mazur/experiments/exp_indoor_seg'
+    writer_root: '/Vol0/user/kirill.mazur/experiments/runs_indoor_closer/'
+data:
+    path: '/Vol1/dbstore/datasets/k.mazur/stanford_3d_mink/Stanford3dDataset_v1.2'
+    batch_size: 6
+    batch_size_val: 6
+    num_workers: 4
+    num_points: 8192
+    test_area: 'Area_5'
+    data_percent: !!float 1.0
+    aug: True
+model:
+    generator: './model_zoo/s3dis/segmenter_pad.py'
+train:
+    label_smooth: False
+    num_epochs: 600
+    show_each: 2000
+    save_each: 25000
+    save_each_epoch: 1
+    val_step: 1
