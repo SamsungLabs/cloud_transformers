@@ -7,7 +7,8 @@ from layers.utils import AdaIn1dUpd, PlaneTransformer, VolTransformer
 
 def forward_style(module_list, input, z):
     for layer in module_list:
-        if isinstance(layer, AdaIn1dUpd):
+#         if isinstance(layer, AdaIn1dUpd):
+        if 'AdaIn1dUpd' in str(type(layer)):
             input = layer(input, z)
         else:
             input = layer(input)
@@ -24,7 +25,8 @@ class MultiHeadAdaIn(nn.Module):
                  tensor_dim,
                  heads,
                  n_latent=256,
-                 unet=False):
+                 unet=False,
+                 scales=False):
         super().__init__()
 
         assert(tensor_dim == 3 or tensor_dim == 2)
@@ -90,9 +92,9 @@ class MultiHeadAdaIn(nn.Module):
         self.transform = None
 
         if self.tensor_dim == 3:
-            self.transform = VolTransformer(self.heads)
+            self.transform = VolTransformer(self.heads, scales=scales)
         else:
-            self.transform = PlaneTransformer(self.heads)
+            self.transform = PlaneTransformer(self.heads, scales=scales)
 
         self._reset_parameters()
 
@@ -143,7 +145,8 @@ class MultiHeadUnionAdaIn(nn.Module):
                  heads,
                  model_dim_out=None,
                  n_latent=256,
-                 unet=False):
+                 unet=False,
+                 scales=False):
         super().__init__()
         self.model_dim = model_dim
 
@@ -187,7 +190,7 @@ class MultiHeadUnionAdaIn(nn.Module):
                                              tensor_size=tensor_size,
                                              tensor_dim=tensor_dim,
                                              n_latent=n_latent,
-                                             heads=head, unet=unet))
+                                             heads=head, unet=unet, scales=scales))
 
         self.attentions = nn.ModuleList(attentions)
 
